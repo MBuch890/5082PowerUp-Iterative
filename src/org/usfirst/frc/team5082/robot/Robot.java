@@ -1,6 +1,10 @@
 package org.usfirst.frc.team5082.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Spark;
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -12,10 +16,15 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * directory.
  */
 public class Robot extends IterativeRobot {
-	final String defaultAuto = "Default";
-	final String customAuto = "My Auto";
-	String autoSelected;
-	SendableChooser<String> chooser = new SendableChooser<>();
+	
+	//0 is being used as a placeholder for port #s
+	
+	Spark mFrontLeft, mMidLeft, mBackLeft, mFrontRight, mMidRight, mBackRight;
+	DifferentialDrive drive;
+	SpeedControllerGroup left, right;
+	Joystick joy;
+	
+	double speed, rotation;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -23,28 +32,23 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
-		chooser.addDefault("Default Auto", defaultAuto);
-		chooser.addObject("My Auto", customAuto);
-		SmartDashboard.putData("Auto choices", chooser);
+		joy = new Joystick(0);
+		mFrontLeft = new Spark(0);
+		mMidLeft = new Spark(0);
+		mBackLeft = new Spark(0);
+		mFrontRight = new Spark(0);
+		mMidRight = new Spark(0);
+		mBackRight = new Spark(0);
+		left = new SpeedControllerGroup(mFrontLeft, mMidLeft, mBackLeft);
+		right = new SpeedControllerGroup(mFrontRight, mMidRight, mBackRight);
+		drive = new DifferentialDrive(left, right);
+		drive.setSafetyEnabled(true);
 	}
 
-	/**
-	 * This autonomous (along with the chooser code above) shows how to select
-	 * between different autonomous modes using the dashboard. The sendable
-	 * chooser code works with the Java SmartDashboard. If you prefer the
-	 * LabVIEW Dashboard, remove all of the chooser code and uncomment the
-	 * getString line to get the auto name from the text box below the Gyro
-	 *
-	 * You can add additional auto modes by adding additional comparisons to the
-	 * switch structure below with additional strings. If using the
-	 * SendableChooser make sure to add them to the chooser code above as well.
-	 */
+	//This function is run once before autonomousPeriodic() begins
 	@Override
 	public void autonomousInit() {
-		autoSelected = chooser.getSelected();
-		// autoSelected = SmartDashboard.getString("Auto Selector",
-		// defaultAuto);
-		System.out.println("Auto selected: " + autoSelected);
+		
 	}
 
 	/**
@@ -52,15 +56,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
-		switch (autoSelected) {
-		case customAuto:
-			// Put custom auto code here
-			break;
-		case defaultAuto:
-		default:
-			// Put default auto code here
-			break;
-		}
+		
 	}
 
 	/**
@@ -68,6 +64,10 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
+		speed = joy.getRawAxis(1);
+		rotation = joy.getRawAxis(4);
+		
+		drive.arcadeDrive(speed, rotation);
 	}
 
 	/**

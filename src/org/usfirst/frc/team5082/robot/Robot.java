@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -23,8 +24,12 @@ public class Robot extends IterativeRobot {
 	DifferentialDrive drive;
 	SpeedControllerGroup left, right;
 	Joystick joy;
+	Timer timer;
+	
+	SendableChooser<Integer> chooser = new SendableChooser<Integer>();
 	
 	double speed, rotation;
+	int auto;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -32,6 +37,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
+		timer = new Timer();
 		joy = new Joystick(0);
 		mFrontLeft = new Spark(0);
 		mMidLeft = new Spark(0);
@@ -39,16 +45,29 @@ public class Robot extends IterativeRobot {
 		mFrontRight = new Spark(0);
 		mMidRight = new Spark(0);
 		mBackRight = new Spark(0);
+		
 		left = new SpeedControllerGroup(mFrontLeft, mMidLeft, mBackLeft);
 		right = new SpeedControllerGroup(mFrontRight, mMidRight, mBackRight);
 		drive = new DifferentialDrive(left, right);
+		
+		auto = 4;
+		
 		drive.setSafetyEnabled(true);
+		
+		SmartDashboard.putData("Autonomous Mode Selector: ", chooser);
+    	chooser.addDefault("Left", 1);
+    	chooser.addObject("Center", 2);
+    	chooser.addObject("Right", 3);
+    	chooser.addObject("Auto Line Only", 4);
+    	chooser.addObject("None", 5);
 	}
 
 	//This function is run once before autonomousPeriodic() begins
 	@Override
 	public void autonomousInit() {
-		
+		auto = chooser.getSelected();
+		timer.reset();
+		timer.start();
 	}
 
 	/**

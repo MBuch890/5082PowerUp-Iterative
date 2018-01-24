@@ -1,14 +1,9 @@
 package org.usfirst.frc.team5082.robot;
 
-import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.Spark;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import sun.nio.cs.ext.DoubleByte.Encoder;
+import edu.wpi.first.wpilibj.IterativeRobot;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -19,24 +14,20 @@ import sun.nio.cs.ext.DoubleByte.Encoder;
  */
 public class Robot extends IterativeRobot {
 	
-	//VARIABLES
-	//0 is being used as a placeholder for port #s
+	double kP = 1;
+	double kI = 1;
+	double kD = 1;
 	
-	public static final int WHEEL_DIAMETER = 0;										//For calculating with encoders. Don't know which wheel will be encoded
-	public static final int PULSE_PER_REVOLUTION = 360;								//For calculating with encoders
+	Auton auton;
+	RobotBase rb;
+	//Joystick joy;																		//joystick for 1 driver arcade drive
+
+	DriverStation DS;
 	
-	Spark mFrontLeft, mMidLeft, mBackLeft, mFrontRight, mMidRight, mBackRight;		//drive motors
-	DifferentialDrive drive;															//drive base w all drive motors
-	SpeedControllerGroup left, right;												//grouping motors by side
-	//Joystick joy;																	//joystick for 1 driver arcade drive
-	Timer timer;																		//game timer
-	Encoder encoder;																	//measuring the distance driven
-	Gyro gyro;																		//measuring the angle turned
+	SendableChooser<Integer> chooser = new SendableChooser<Integer>();					//communicates what auto got chose, pt 1
 	
-	SendableChooser<Integer> chooser = new SendableChooser<Integer>();				//communicates what auto got chose, pt 1
-	
-	double speed, rotation;															//to be fed into arcadeDrive()
-	int auto;																		//communicates what auto got chose, pt 2
+	double speed, rotation;																//to be fed into arcadeDrive()
+	int autoChooser;																			//communicates what auto got chose, pt 2
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -44,49 +35,36 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
+		
+		rb.init();
+		
 		//INITIALIZING VARS
-		timer = new Timer();
 		//joy = new Joystick(0);
-		encoder = new Encoder(0, 0, false);
+		DS = DriverStation.getInstance();
 		
-		mFrontLeft = new Spark(0);
-		mMidLeft = new Spark(0);
-		mBackLeft = new Spark(0);
-		mFrontRight = new Spark(0);
-		mMidRight = new Spark(0);
-		mBackRight = new Spark(0);
+		autoChooser = 0;
 		
-		left = new SpeedControllerGroup(mFrontLeft, mMidLeft, mBackLeft);
-		right = new SpeedControllerGroup(mFrontRight, mMidRight, mBackRight);
-		drive = new DifferentialDrive(left, right);
-		
-		auto = 0;
-		
-		//OTHER INIT STUFF
-		
-		encoder.setDistancePerPulse(Math.PI * WHEEL_DIAMETER / PULSE_PER_REVOLUTION);		//set multiplier for getDistance()
-		
-		drive.setSafetyEnabled(true);													//presumably this is useful, but we're not sure yet
-		
+		//OTHER INIT STUFF		
 		SmartDashboard.putData("Autonomous Mode Selector: ", chooser);					//creates a menu of autonomii
-		chooser.addObject("Left", 1);
-		chooser.addObject("Center", 2);
-		chooser.addObject("Right", 3);
-		chooser.addObject("Auto Line Only", 4);
-		chooser.addDefault("None", 0);
+		chooser.addObject("Left Start, Switch", rb.LSWITCH);
+		chooser.addObject("Center Start, Switch", rb.CSWITCH);
+		chooser.addObject("Right Start, Switch", rb.RSWITCH);
+		chooser.addObject("Auto Line Only", rb.AUTOLINE);
+		chooser.addDefault("None", rb.DEFAULT);
 	}
 
 	//This function is run once before autonomousPeriodic() begins
 	@Override
 	public void autonomousInit() {
-																					
-		auto = chooser.getSelected();													//pick an auto to run
+											
+		auton = new Auton();
+		autoChooser = chooser.getSelected();													//pick the auto to run
 		
 		//prep important sensors to go
-		timer.reset();
-		timer.start();
-		encoder.reset();
-		gyro.reset();
+		rb.timer.reset();
+		rb.timer.start();
+		rb.encoder.reset();
+		rb.gyro.reset();
 	}
 
 	/**
@@ -95,63 +73,11 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		
-		double distance = encoder.get();
-		String orientation = (DriverStation.getGameSpecificMessage()).substring(0, 1);
+		double distance = rb.encoder.get();
+		String orientation = (DS.getGameSpecificMessage()).substring(0, 1);
 		
-		if(DriverStation.isEnabled()) {
+		if(DS.isEnabled()) auton.autoPeriodic(autoChooser, orientation);
 		
-			//do different things depending on the auto that was chosen to run
-			switch (auto) {
-		
-				case 0: //default autonomous or no autonomous FINISHED
-					break;
-				
-				case 1: //left starting position
-					
-					if (orientation.equalsIgnoreCase("L")) {
-						//TODO: drive forward
-					}
-					else if (orientation.equalsIgnoreCase("R")) {
-						//TODO: drive around to other side
-					}
-					else {
-						System.out.println("someone done diddly messed up my girl");
-					}
-					break;
-			
-				case 2: //center starting position
-					
-					if (orientation.equalsIgnoreCase("L")) {
-						//TODO: drive forward
-					}
-					else if (orientation.equalsIgnoreCase("R")) {
-						//TODO: drive around to other side
-					}
-					else {
-						System.out.println("someone done diddly messed up my girl");
-					}
-					break;
-			
-				case 3: //right starting position
-					
-					if (orientation.equalsIgnoreCase("L")) {
-						//TODO: drive forward
-					}
-					else if (orientation.equalsIgnoreCase("R")) {
-						//TODO: drive around to other side
-					}
-					else {
-						System.out.println("someone done diddly messed up my girl");
-					}
-					break;
-				
-				case 4: //just drive forward
-					
-					//TODO: drive forward
-					break;
-				
-			}
-		}
 	}
 
 	/**
@@ -160,14 +86,14 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		
-		if (DriverStation.isEnabled()) {
+		if (DS.isEnabled()) {
 			//Currently dead cause idk what controller is gotta get used
 			//speed = joy.getRawAxis(1);
 			//rotation = joy.getRawAxis(4);
 			//drive.arcadeDrive(speed, rotation);
 			
-			SmartDashboard.putDouble("Match Timer: ", 135 - timer.get());
-			SmartDashboard.putDouble("Your Orientation: ", gyro.getAngle());
+			SmartDashboard.putNumber("Match Timer: ", 135 - rb.timer.get());
+			SmartDashboard.putNumber("Your Orientation: ", rb.gyro.getAngle());
 			
 		}
 	}

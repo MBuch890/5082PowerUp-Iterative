@@ -7,6 +7,8 @@ public class Auton {
 	private Timer autoTimer;
 	private RobotBase rb;
 	
+	private boolean didDrove = false;
+	
 	public Auton () {
 		autoTimer = new Timer();
 	}
@@ -17,13 +19,17 @@ public class Auton {
 		} else if (orientation == rb.LSWITCH) {
 			if (plateOrient.equalsIgnoreCase("L")) {
 				
-				if (autoTimer.get() < 2) {
+				if (autoTimer.get() < 2 && didDrove == false) {
 					rb.drive.arcadeDrive(1, 0);
 				}
 				else {
 					rb.drive.arcadeDrive(0, 0);
+					didDrove = true;
 				}
 				
+				if (autoTimer.get() < 2 && didDrove == true) {
+					rb.drive.arcadeDrive(0, .5);
+				}
 				//TODO more & better
 			}
 			else if (plateOrient.equalsIgnoreCase("R")) {

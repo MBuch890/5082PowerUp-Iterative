@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Joystick;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -20,7 +21,7 @@ public class Robot extends IterativeRobot {
 	
 	Auton auton;
 	RobotBase rb;
-	//Joystick joy;																		//joystick for 1 driver arcade drive
+	Joystick joy;																		//joystick for 1 driver arcade drive
 
 	DriverStation DS;
 	
@@ -39,7 +40,7 @@ public class Robot extends IterativeRobot {
 		rb.init();
 		
 		//INITIALIZING VARS
-		//joy = new Joystick(0);
+		joy = new Joystick(0);
 		DS = DriverStation.getInstance();
 		
 		autoChooser = 0;
@@ -88,9 +89,9 @@ public class Robot extends IterativeRobot {
 		
 		if (DS.isEnabled()) {
 			//Currently dead cause idk what controller is gotta get used
-			//speed = joy.getRawAxis(1);
-			//rotation = joy.getRawAxis(4);
-			//drive.arcadeDrive(speed, rotation);
+			speed = joy.getRawAxis(1);
+			rotation = joy.getRawAxis(4);
+			rb.drive.arcadeDrive(speed, rotation);
 			
 			SmartDashboard.putNumber("Match Timer: ", 135 - rb.timer.get());
 			SmartDashboard.putNumber("Your Orientation: ", rb.gyro.getAngle());

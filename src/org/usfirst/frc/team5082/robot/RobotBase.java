@@ -22,7 +22,7 @@ public abstract class RobotBase {
 	final int RSWITCH = 3;
 	final int AUTOLINE = 4;
 	
-	Spark mFrontLeft, mMidLeft, mBackLeft, mFrontRight, mMidRight, mBackRight;			//drive motors
+	Spark mTopLeft, mMidLeft, mBackLeft, mTopRight, mMidRight, mBackRight;				//drive motors
 	DifferentialDrive drive;															//drive base w all drive motors
 	SpeedControllerGroup left, right;													//grouping motors by side
 	
@@ -35,15 +35,15 @@ public abstract class RobotBase {
 		timer = new Timer();
 		encoder = new Encoder(0, 0, false);
 		
-		mFrontLeft = new Spark(0);
-		mMidLeft = new Spark(0);
-		mBackLeft = new Spark(0);
-		mFrontRight = new Spark(0);
-		mMidRight = new Spark(0);
-		mBackRight = new Spark(0);
+		mTopLeft = new Spark(1);
+		mMidLeft = new Spark(6);
+		mBackLeft = new Spark(3);
+		mTopRight = new Spark(5);
+		mMidRight = new Spark(2);
+		mBackRight = new Spark(4);
 		
-		left = new SpeedControllerGroup(mFrontLeft, mMidLeft, mBackLeft);
-		right = new SpeedControllerGroup(mFrontRight, mMidRight, mBackRight);
+		left = new SpeedControllerGroup(mTopLeft, mMidLeft, mBackLeft);
+		right = new SpeedControllerGroup(mTopRight, mMidRight, mBackRight);
 		drive = new DifferentialDrive(left, right);
 		
 		encoder.setDistancePerPulse(Math.PI * WHEEL_DIAMETER / PULSE_PER_REVOLUTION);	//set multiplier for getDistance()

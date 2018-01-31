@@ -88,10 +88,7 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		
 		if (DS.isEnabled()) {
-			//Currently dead cause idk what controller is gotta get used
-			speed = joy.getRawAxis(1);
-			rotation = joy.getRawAxis(4);
-			rb.drive.arcadeDrive(speed, rotation);
+			
 			
 			SmartDashboard.putNumber("Match Timer: ", 135 - rb.timer.get());
 			SmartDashboard.putNumber("Your Orientation: ", rb.gyro.getAngle());

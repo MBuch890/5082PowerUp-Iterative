@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Timer;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -23,6 +24,7 @@ public class Robot extends IterativeRobot {
 	RobotBase rb;
 	Joystick joy;																		//joystick for 1 driver arcade drive
 
+	Timer timer;
 	DriverStation DS;
 	
 	SendableChooser<Integer> chooser = new SendableChooser<Integer>();					//communicates what auto got chose, pt 1
@@ -40,6 +42,7 @@ public class Robot extends IterativeRobot {
 		rb = new RobotBase();
 		
 		//INITIALIZING VARS
+		timer = new Timer();
 		joy = new Joystick(0);
 		DS = DriverStation.getInstance();
 		
@@ -62,8 +65,6 @@ public class Robot extends IterativeRobot {
 		autoChooser = chooser.getSelected();													//pick the auto to run
 		
 		//prep important sensors to go
-		rb.timer.reset();
-		rb.timer.start();
 		rb.encoder.reset();
 		rb.gyro.reset();
 	}
@@ -88,7 +89,7 @@ public class Robot extends IterativeRobot {
 		
 		if (DS.isEnabled()) {
 			SmartDashboard.putNumber("Encoder Distance: ", rb.encoder.getDistance());
-			SmartDashboard.putNumber("Match Timer: ", 135 - rb.timer.get());
+			SmartDashboard.putNumber("Match Timer: ", 135 - timer.get());
 			SmartDashboard.putNumber("Your Orientation: ", rb.gyro.getAngle());
 			
 			rb.drive.arcadeDrive(joy.getRawAxis(1), joy.getRawAxis(4));
@@ -103,8 +104,6 @@ public class Robot extends IterativeRobot {
 	public void testPeriodic() {
 		
 		SmartDashboard.putNumber("Encoder Counts", rb.encoder.get());
-		
-		System.out.println("It has done the download m'lady");
 		
 	}
 }

@@ -12,7 +12,7 @@ public class RobotBase {
 	//VARIABLES
 	//0 is being used as a placeholder for port #s
 	
-	final int WHEEL_DIAMETER_IN = 6;														//For calculating with encoders. Don't know which wheel will be encoded
+	final int WHEEL_DIAMETER_IN = 6;													//For calculating with encoders
 	final int PULSE_PER_REVOLUTION = 256;									    		//For calculating with encoders
 
 	//For auto modes, making things more readable
@@ -40,7 +40,8 @@ public class RobotBase {
 		mMidRight = new Spark(2);
 		mBackRight = new Spark(4);
 		
-		encoder.setDistancePerPulse(PULSE_PER_REVOLUTION / (WHEEL_DIAMETER_IN * Math.PI));	//set multiplier for getDistance()
+		//setting the multiplier used for getDistance();
+		encoder.setDistancePerPulse(PULSE_PER_REVOLUTION / (WHEEL_DIAMETER_IN * Math.PI));
 		
 		drive = new DifferentialDrive(left, right);
 		

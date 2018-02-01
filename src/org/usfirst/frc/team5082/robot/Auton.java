@@ -1,6 +1,7 @@
 package org.usfirst.frc.team5082.robot;
 
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Auton {
 	
@@ -19,6 +20,8 @@ public class Auton {
 		
 		} else if (orientation == rb.LSWITCH) {
 			if (plateOrient.equalsIgnoreCase("L")) {
+				
+				SmartDashboard.putString("Running: ", "Left starting, Left side switch");
 				
 				if (!didDrove && actioNum == 0 && rb.encoder.getDistance() < 12) {
 					rb.drive.arcadeDrive(0.75, 0); //replace the 0 with a gyro based value later
@@ -48,6 +51,9 @@ public class Auton {
 				}
 			}
 			else if (plateOrient.equalsIgnoreCase("R")) {
+				
+				SmartDashboard.putString("Running: ", "Left starting, Right side switch");
+				
 				if (!didDrove && actioNum == 0 /*&& condition*/) {
 					//drive
 				}
@@ -106,14 +112,13 @@ public class Auton {
 					didDump = true;
 					actioNum++;
 				}
-			}
-			else {
-				System.out.println("someone done diddly messed up my girl");
 			}
 		
 		} else if (orientation == rb.CSWITCH) {
 			if (plateOrient.equalsIgnoreCase("L")) {
 				
+				SmartDashboard.putString("Running: ", "Center starting, Left side switch");
+				
 				if (!didDrove && actioNum == 0 /*&& condition*/) {
 					//TODO drive
 				}
@@ -174,6 +179,9 @@ public class Auton {
 				}
 			}
 			else if (plateOrient.equalsIgnoreCase("R")) {
+				
+				SmartDashboard.putString("Running: ", "Center starting, Right side switch");
+				
 				if (!didDrove && actioNum == 0 /*&& condition*/) {
 					//drive
 				}
@@ -233,12 +241,11 @@ public class Auton {
 					actioNum++;
 				}
 			}
-			else {
-				System.out.println("someone done diddly messed up my girl");
-			}
 		
 		} else if (orientation == rb.RSWITCH) {
 			if (plateOrient.equalsIgnoreCase("L")) {
+				
+				SmartDashboard.putString("Running: ", "Right starting, Left side switch");
 				
 				if (!didDrove && actioNum == 0 /*&& condition*/) {
 					//TODO drive
@@ -300,6 +307,9 @@ public class Auton {
 				}
 			}
 			else if (plateOrient.equalsIgnoreCase("R")) {
+				
+				SmartDashboard.putString("Running: ", "Right starting, Right side switch");
+				
 				if (!didDrove && actioNum == 0/*&& condition*/) {
 					//TODO drive
 				}
@@ -327,11 +337,10 @@ public class Auton {
 					actioNum++;
 				}
 			}
-			else {
-				System.out.println("someone done diddly messed up my girl");
-			}
 		
 		} else if (orientation == rb.AUTOLINE) {
+			
+			SmartDashboard.putString("Running: ", "Auto Line Only");
 			
 			if (rb.encoder.getDistance() < 36) {
 				rb.drive.arcadeDrive(0.75, 0);

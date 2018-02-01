@@ -28,7 +28,7 @@ public class Robot extends IterativeRobot {
 	SendableChooser<Integer> chooser = new SendableChooser<Integer>();					//communicates what auto got chose, pt 1
 	
 	double speed, rotation;																//to be fed into arcadeDrive()
-	int autoChooser;																			//communicates what auto got chose, pt 2
+	int autoChooser;																	//communicates what auto got chose, pt 2
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -37,7 +37,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		
-		rb.init();
+		rb = new RobotBase();
 		
 		//INITIALIZING VARS
 		joy = new Joystick(0);
@@ -74,7 +74,6 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		
-		double distance = rb.encoder.get();
 		String orientation = (DS.getGameSpecificMessage()).substring(0, 1);
 		
 		if(DS.isEnabled()) auton.autoPeriodic(autoChooser, orientation);
@@ -88,10 +87,11 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		
 		if (DS.isEnabled()) {
-			
-			
+			SmartDashboard.putNumber("Encoder Distance: ", rb.encoder.getDistance());
 			SmartDashboard.putNumber("Match Timer: ", 135 - rb.timer.get());
 			SmartDashboard.putNumber("Your Orientation: ", rb.gyro.getAngle());
+			
+			rb.drive.arcadeDrive(joy.getRawAxis(1), joy.getRawAxis(4));
 			
 		}
 	}
@@ -101,6 +101,10 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void testPeriodic() {
+		
+		rb.init();
+		
+		SmartDashboard.putNumber("Encoder Counts", rb.encoder.get());
 		
 		System.out.println("It has done the download m'lady");
 		

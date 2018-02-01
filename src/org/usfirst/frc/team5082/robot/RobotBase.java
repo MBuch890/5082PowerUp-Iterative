@@ -26,14 +26,11 @@ public class RobotBase {
 	SpeedControllerGroup left, right;
 	DifferentialDrive drive;															//drive base w all drive motors
 	
-	Timer timer;																		//game timer	
 	Encoder encoder;																	//measuring the distance driven
 	Gyro gyro;																			//measuring the angle turned
 	
-	public RobotBase () {}
-	public void init() {
+	public RobotBase () {
 		
-		timer = new Timer();
 		encoder = new Encoder(0, 1);
 		
 		mTopLeft = new Spark(1);
@@ -44,10 +41,10 @@ public class RobotBase {
 		mBackRight = new Spark(4);
 		
 		encoder.setDistancePerPulse(PULSE_PER_REVOLUTION / (WHEEL_DIAMETER_IN * Math.PI));	//set multiplier for getDistance()
-	
+		
 		drive = new DifferentialDrive(left, right);
 		
 		drive.setSafetyEnabled(true);
-
+		
 	}
 }

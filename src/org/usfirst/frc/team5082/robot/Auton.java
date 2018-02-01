@@ -4,14 +4,13 @@ import edu.wpi.first.wpilibj.Timer;
 
 public class Auton {
 	
-	private Timer autoTimer;
 	private RobotBase rb;
 	
 	private boolean didDrove = false, didTurn = false, didDump = false;
 	private int actioNum = 0;
 	
 	public Auton () {
-		autoTimer = new Timer();
+		rb.encoder.reset();
 	}
 	
 	public void autoPeriodic(int orientation, String plateOrient) {
@@ -66,6 +65,7 @@ public class Auton {
 					didTurn = true;
 					didDrove = false;
 					actioNum++;
+					rb.encoder.reset();
 				}
 				
 				if (didTurn && !didDrove && actioNum == 2/*&& condition*/) {
@@ -86,6 +86,7 @@ public class Auton {
 					didTurn = true;
 					didDrove = false;
 					actioNum++;
+					rb.encoder.reset();
 				}
 				
 				if (didTurn && !didDrove && actioNum == 4 /*&& condition*/) {
@@ -130,6 +131,7 @@ public class Auton {
 					didTurn = true;
 					didDrove = false;
 					actioNum++;
+					rb.encoder.reset();
 				}
 				
 				if (didTurn && !didDrove && actioNum == 2/*&& condition*/) {
@@ -150,6 +152,7 @@ public class Auton {
 					didTurn = true;
 					didDrove = false;
 					actioNum++;
+					rb.encoder.reset();
 				}
 				
 				if (didTurn && !didDrove && actioNum == 4 /*&& condition*/) {
@@ -188,6 +191,7 @@ public class Auton {
 					didTurn = true;
 					didDrove = false;
 					actioNum++;
+					rb.encoder.reset();
 				}
 				
 				if (didTurn && !didDrove && actioNum == 2/*&& condition*/) {
@@ -208,6 +212,7 @@ public class Auton {
 					didTurn = true;
 					didDrove = false;
 					actioNum++;
+					rb.encoder.reset();
 				}
 				
 				if (didTurn && !didDrove && actioNum == 4 /*&& condition*/) {
@@ -252,6 +257,7 @@ public class Auton {
 					didTurn = true;
 					didDrove = false;
 					actioNum++;
+					rb.encoder.reset();
 				}
 				
 				if (didTurn && !didDrove && actioNum == 2/*&& condition*/) {
@@ -272,6 +278,7 @@ public class Auton {
 					didTurn = true;
 					didDrove = false;
 					actioNum++;
+					rb.encoder.reset();
 				}
 				
 				if (didTurn && !didDrove && actioNum == 4 /*&& condition*/) {
@@ -325,6 +332,11 @@ public class Auton {
 			}
 		
 		} else if (orientation == rb.AUTOLINE) {
+			
+			if (rb.encoder.getDistance() < 36) {
+				rb.drive.arcadeDrive(0.75, 0);
+			}
+			
 		}
 		
 	}

@@ -102,8 +102,6 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void testPeriodic() {
 		
-		rb.init();
-		
 		SmartDashboard.putNumber("Encoder Counts", rb.encoder.get());
 		
 		System.out.println("It has done the download m'lady");

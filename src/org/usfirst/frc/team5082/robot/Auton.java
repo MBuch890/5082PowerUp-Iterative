@@ -1,6 +1,5 @@
 package org.usfirst.frc.team5082.robot;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Auton {
@@ -133,24 +132,27 @@ public class Auton {
 					actioNum++;
 				}
 			}
-		
+		//RUNNING CENTER STARTING POSITION
 		} else if (orientation == rb.CSWITCH) {
+			//If our alliance color on our switch is on the LEFT
 			if (plateOrient.equalsIgnoreCase("L")) {
 				
 				SmartDashboard.putString("Running: ", "Center starting, Left side switch");
 				
+				//Drive X ft (TODO)
 				if (!didDrove && actioNum == 0 /*&& condition*/) {
-					//TODO drive
 				}
+				//Setup for next action
 				else {
 					rb.drive.arcadeDrive(0, 0);
 					didDrove = true;
 					actioNum++;
 				}
 				
+				//Turn X degrees (TODO)
 				if (didDrove && !didTurn && actioNum == 1/*&& condition*/) {
-					//TODO turn
 				}
+				//Setup for next action
 				else {
 					rb.drive.arcadeDrive(0, 0);
 					didTurn = true;
@@ -159,9 +161,10 @@ public class Auton {
 					rb.encoder.reset();
 				}
 				
+				//Drive X ft (TODO)
 				if (didTurn && !didDrove && actioNum == 2/*&& condition*/) {
-					//TODO drive again
 				}
+				//Setup for next action
 				else {
 					rb.drive.arcadeDrive(0, 0);
 					didDrove = true;
@@ -169,9 +172,10 @@ public class Auton {
 					actioNum++;
 				}
 				
+				// Turn X degrees (TODO)
 				if (didDrove && !didTurn && actioNum == 3 /*&& condition*/) {
-					//TODO turn again
 				}
+				//Setup for next action
 				else {
 					rb.drive.arcadeDrive(0, 0);
 					didTurn = true;
@@ -180,40 +184,45 @@ public class Auton {
 					rb.encoder.reset();
 				}
 				
+				//Drive X ft (TODO)
 				if (didTurn && !didDrove && actioNum == 4 /*&& condition*/) {
-					//TODO drive again
 				}
+				//Setup for next action
 				else {
 					rb.drive.arcadeDrive(0, 0);
 					didDrove = true;
 					actioNum++;
 				}
 				
+				//Dump cube (TODO)
 				if(didDrove && !didDump && actioNum == 5 /*&& condition*/) {
-					//TODO dump cube
 				}
+				//Setup for next action
 				else {
 					rb.drive.arcadeDrive(0, 0);
 					didDump = true;
 					actioNum++;
 				}
 			}
+			//If our alliance color for our switch is on the RIGHT
 			else if (plateOrient.equalsIgnoreCase("R")) {
 				
 				SmartDashboard.putString("Running: ", "Center starting, Right side switch");
 				
+				//Drive X ft (TODO)
 				if (!didDrove && actioNum == 0 /*&& condition*/) {
-					//drive
 				}
+				//Setup for next action
 				else {
 					rb.drive.arcadeDrive(0, 0);
 					didDrove = true;
 					actioNum++;
 				}
 				
+				//Turn X degrees
 				if (didDrove && !didTurn && actioNum == 1/*&& condition*/) {
-					//turn
 				}
+				//Setup for next action
 				else {
 					rb.drive.arcadeDrive(0, 0);
 					didTurn = true;
@@ -222,9 +231,10 @@ public class Auton {
 					rb.encoder.reset();
 				}
 				
+				//Drive X ft (TODO)
 				if (didTurn && !didDrove && actioNum == 2/*&& condition*/) {
-					//drive again
 				}
+				//Setup for next action
 				else {
 					rb.drive.arcadeDrive(0, 0);
 					didDrove = true;
@@ -232,9 +242,10 @@ public class Auton {
 					actioNum++;
 				}
 				
+				//Turn X degrees (TODO)
 				if (didDrove && !didTurn && actioNum == 3 /*&& condition*/) {
-					//turn again
 				}
+				//Setup for next action
 				else {
 					rb.drive.arcadeDrive(0, 0);
 					didTurn = true;
@@ -243,42 +254,47 @@ public class Auton {
 					rb.encoder.reset();
 				}
 				
+				//Drive X ft (TODO)
 				if (didTurn && !didDrove && actioNum == 4 /*&& condition*/) {
-					//drive again
 				}
+				//Setup for next action
 				else {
 					rb.drive.arcadeDrive(0, 0);
 					didDrove = true;
 					actioNum++;
 				}
 				
+				//Dump the cube
 				if(didDrove && !didDump && actioNum == 5 /*&& condition*/) {
-					//dump cube
 				}
+				//Setup for next action
 				else {
 					rb.drive.arcadeDrive(0, 0);
 					didDump = true;
 					actioNum++;
 				}
 			}
-		
+		//RUNNING RIGHT SIDE STARTING POSITION
 		} else if (orientation == rb.RSWITCH) {
+			//If our alliance color for our switch is on the LEFT
 			if (plateOrient.equalsIgnoreCase("L")) {
 				
 				SmartDashboard.putString("Running: ", "Right starting, Left side switch");
 				
+				//Drive X ft (TODO)
 				if (!didDrove && actioNum == 0 /*&& condition*/) {
-					//TODO drive
 				}
+				//Setup for next action
 				else {
 					rb.drive.arcadeDrive(0, 0);
 					didDrove = true;
 					actioNum++;
 				}
 				
+				//Turn X degrees (TODO)
 				if (didDrove && !didTurn && actioNum == 1/*&& condition*/) {
-					//TODO turn
 				}
+				//Setup for next action
 				else {
 					rb.drive.arcadeDrive(0, 0);
 					didTurn = true;
@@ -287,9 +303,10 @@ public class Auton {
 					rb.encoder.reset();
 				}
 				
+				//Drive X ft (TODO)
 				if (didTurn && !didDrove && actioNum == 2/*&& condition*/) {
-					//TODO drive again
 				}
+				//Setup for next action
 				else {
 					rb.drive.arcadeDrive(0, 0);
 					didDrove = true;
@@ -297,9 +314,10 @@ public class Auton {
 					actioNum++;
 				}
 				
+				//Turn X degrees (TODO)
 				if (didDrove && !didTurn && actioNum == 3 /*&& condition*/) {
-					//TODO turn again
 				}
+				//Setup for next action
 				else {
 					rb.drive.arcadeDrive(0, 0);
 					didTurn = true;
@@ -308,61 +326,67 @@ public class Auton {
 					rb.encoder.reset();
 				}
 				
+				//Drive X ft (TODO)
 				if (didTurn && !didDrove && actioNum == 4 /*&& condition*/) {
-					//TODO drive again
 				}
+				//Setup for next action
 				else {
 					rb.drive.arcadeDrive(0, 0);
 					didDrove = true;
 					actioNum++;
 				}
 				
+				//Dump cube
 				if(didDrove && !didDump && actioNum == 5 /*&& condition*/) {
-					//TODO dump cube
 				}
+				//Setup for next action
 				else {
 					rb.drive.arcadeDrive(0, 0);
 					didDump = true;
 					actioNum++;
 				}
 			}
+			//If our alliance color for our switch is on the RIGHT
 			else if (plateOrient.equalsIgnoreCase("R")) {
 				
 				SmartDashboard.putString("Running: ", "Right starting, Right side switch");
 				
+				//Drive X ft (TODO)
 				if (!didDrove && actioNum == 0/*&& condition*/) {
-					//TODO drive
 				}
+				//Setup for next action
 				else {
 					rb.drive.arcadeDrive(0, 0);
 					didDrove = true;
 					actioNum++;
 				}
 				
+				//Turn X degrees (TODO)
 				if (didDrove && !didTurn && actioNum == 1 /*&& condition*/) {
-					//TODO turn
 				}
+				//Setup for next action
 				else {
 					rb.drive.arcadeDrive(0, 0);
 					didTurn = true;
 					actioNum++;
 				}
 				
+				//Dump cube (TODO)
 				if (didTurn && !didDump && actioNum == 2/*&& condition*/) {
-					//TODO dump cube in
 				}
+				//Setup for next action
 				else {
 					rb.drive.arcadeDrive(0, 0);
 					didDump = true;
 					actioNum++;
 				}
 			}
-		
+		//STARTING POSITION NULL, WE ONLY DO AUTO LINE
 		} else if (orientation == rb.AUTOLINE) {
 			
 			SmartDashboard.putString("Running: ", "Auto Line Only");
 			
-			if (rb.encoder.getDistance() < 36) {
+			if (rb.encoder.getDistance() < 120) {
 				rb.drive.arcadeDrive(0.75, 0);
 			}
 			

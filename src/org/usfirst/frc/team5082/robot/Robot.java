@@ -83,6 +83,9 @@ public class Robot extends IterativeRobot {
 		
 		//run auto only while the ds is on
 		if(DS.isEnabled()) auton.autoPeriodic(autoChooser, orientation);
+		else {
+			rb.drive.arcadeDrive(0, 0);
+		}
 		
 	}
 
@@ -102,6 +105,9 @@ public class Robot extends IterativeRobot {
 			//driving with same joys as last year (change if requested to)
 			rb.drive.arcadeDrive(joy.getRawAxis(1), joy.getRawAxis(4));
 			
+		}
+		else {
+			rb.drive.arcadeDrive(0, 0);
 		}
 	}
 

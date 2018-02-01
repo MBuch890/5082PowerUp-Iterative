@@ -29,10 +29,13 @@ public class RobotBase {
 	Encoder encoder;																	//measuring the distance driven
 	Gyro gyro;																			//measuring the angle turned
 	
+	//whenever someone instantiates rb do all that automatically
 	public RobotBase () {
 		
+		//instantiate encoder
 		encoder = new Encoder(0, 1);
 		
+		//create instances of motors
 		mTopLeft = new Spark(1);
 		mMidLeft = new Spark(6);
 		mBackLeft = new Spark(3);
@@ -43,8 +46,8 @@ public class RobotBase {
 		//setting the multiplier used for getDistance();
 		encoder.setDistancePerPulse(PULSE_PER_REVOLUTION / (WHEEL_DIAMETER_IN * Math.PI));
 		
+		//setup drive base
 		drive = new DifferentialDrive(left, right);
-		
 		drive.setSafetyEnabled(true);
 		
 	}

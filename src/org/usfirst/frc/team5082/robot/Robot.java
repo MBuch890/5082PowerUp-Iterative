@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.Timer;
  */
 public class Robot extends IterativeRobot {
 	
+	//for PID control (later)
 	double kP = 1;
 	double kI = 1;
 	double kD = 1;
@@ -24,6 +25,7 @@ public class Robot extends IterativeRobot {
 	RobotBase rb;
 	Joystick joy;																		//joystick for 1 driver arcade drive
 
+	//instances of the cool kids (we need them)
 	Timer timer;
 	DriverStation DS;
 	
@@ -39,13 +41,13 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		
+		//INSTANCE OF THE RB
 		rb = new RobotBase();
 		
 		//INITIALIZING VARS
 		timer = new Timer();
 		joy = new Joystick(0);
 		DS = DriverStation.getInstance();
-		
 		autoChooser = 0;
 		
 		//OTHER INIT STUFF		
@@ -60,9 +62,10 @@ public class Robot extends IterativeRobot {
 	//This function is run once before autonomousPeriodic() begins
 	@Override
 	public void autonomousInit() {
-											
+							
+		//INSTANCE OF THE AUTON & CHOOSE THE AUTON
 		auton = new Auton();
-		autoChooser = chooser.getSelected();													//pick the auto to run
+		autoChooser = chooser.getSelected();
 		
 		//prep important sensors to go
 		rb.encoder.reset();
@@ -75,8 +78,10 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		
+		//what is the way things are set up (like the randomized plats)
 		String orientation = (DS.getGameSpecificMessage()).substring(0, 1);
 		
+		//run auto only while the ds is on
 		if(DS.isEnabled()) auton.autoPeriodic(autoChooser, orientation);
 		
 	}
@@ -87,11 +92,14 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		
+		//run tele only while the ds is on
 		if (DS.isEnabled()) {
+			//printing msgs to dash
 			SmartDashboard.putNumber("Encoder Distance: ", rb.encoder.getDistance());
 			SmartDashboard.putNumber("Match Timer: ", 135 - timer.get());
 			SmartDashboard.putNumber("Your Orientation: ", rb.gyro.getAngle());
 			
+			//driving with same joys as last year (change if requested to)
 			rb.drive.arcadeDrive(joy.getRawAxis(1), joy.getRawAxis(4));
 			
 		}
@@ -103,6 +111,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void testPeriodic() {
 		
+		//THIS IS FOR TESTING so nothing here is sacred
 		SmartDashboard.putNumber("Encoder Counts", rb.encoder.get());
 		
 	}

@@ -26,12 +26,12 @@ public class Auton {
 		//RUNNING LEFT SIDE STARTING POSITION
 		else if (orientation == rb.LSWITCH) {
 			//If our alliance color on our switch is on the LEFT
-			if (plateOrient.equalsIgnoreCase("L")) {
+			if (true /*plateOrient.equalsIgnoreCase("L")*/) {
 				
 				SmartDashboard.putString("Running: ", "Left starting, Left side switch");
 				
 				//Drive forward 1 foot (UNTESTED)
-				if (!didDrove && actioNum == 0 && rb.encoder.getDistance() < 12) {
+				if (!didDrove && actioNum == 0 && rb.encoder.getDistance() < 48) {
 					rb.drive.arcadeDrive(0.75, 0); //replace the 0 with a gyro based value later
 				}
 				//Setup for next action

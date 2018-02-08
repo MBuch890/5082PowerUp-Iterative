@@ -23,8 +23,7 @@ public class RobotBase {
 	final int AUTOLINE = 4;
 	
 	Spark mTopLeft, mMidLeft, mBackLeft, mTopRight, mMidRight, mBackRight;				//drive motors
-	SpeedControllerGroup left, right;
-	DifferentialDrive drive;															//drive base w all drive motors
+	DifferentialDrive topCims, midCims, bottomCims;															//drive base w all drive motors
 	
 	Encoder encoder;																	//measuring the distance driven
 	Gyro gyro;																			//measuring the angle turned
@@ -36,19 +35,20 @@ public class RobotBase {
 		encoder = new Encoder(0, 1);
 		
 		//create instances of motors
-		mTopLeft = new Spark(1);
-		mMidLeft = new Spark(6);
-		mBackLeft = new Spark(3);
-		mTopRight = new Spark(5);
-		mMidRight = new Spark(2);
-		mBackRight = new Spark(4);
+		mTopLeft = new Spark(0);
+		mMidLeft = new Spark(1);
+		mBackRight = new Spark(9);
+		mTopRight = new Spark(3);
+		mBackLeft = new Spark(2);
+		mMidRight = new Spark(4);
 		
 		//setting the multiplier used for getDistance();
 		encoder.setDistancePerPulse(PULSE_PER_REVOLUTION / (WHEEL_DIAMETER_IN * Math.PI));
 		
 		//setup drive base
-		drive = new DifferentialDrive(left, right);
-		drive.setSafetyEnabled(true);
+		DifferentialDrive topCims = new DifferentialDrive(mTopLeft,mTopRight);
+		DifferentialDrive midCims = new DifferentialDrive(mMidLeft, mMidRight);
+		DifferentialDrive bottomCims = new DifferentialDrive(mBackLeft, mBackRight);
 		
 	}
 }

@@ -84,7 +84,9 @@ public class Robot extends IterativeRobot {
 		//run auto only while the ds is on
 		if(DS.isEnabled()) auton.autoPeriodic(autoChooser, orientation);
 		else {
-			rb.drive.arcadeDrive(0, 0);
+			rb.topCims.arcadeDrive(0, 0);
+			rb.midCims.arcadeDrive(0, 0);
+			rb.bottomCims.arcadeDrive(0, 0);
 		}
 		
 	}
@@ -103,11 +105,14 @@ public class Robot extends IterativeRobot {
 			SmartDashboard.putNumber("Your Orientation: ", rb.gyro.getAngle());
 			
 			//driving with same joys as last year (change if requested to)
-			rb.drive.arcadeDrive(joy.getRawAxis(1), joy.getRawAxis(4));
-			
+			rb.topCims.arcadeDrive(joy.getRawAxis(1), joy.getRawAxis(4));
+			rb.midCims.arcadeDrive(joy.getRawAxis(1), joy.getRawAxis(4));
+			rb.bottomCims.arcadeDrive(joy.getRawAxis(1), joy.getRawAxis(4));
 		}
 		else {
-			rb.drive.arcadeDrive(0, 0);
+			rb.topCims.arcadeDrive(0, 0);
+			rb.midCims.arcadeDrive(0, 0);
+			rb.bottomCims.arcadeDrive(0, 0);
 		}
 	}
 

@@ -1,5 +1,6 @@
 package org.usfirst.frc.team5082.robot;
 
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -50,6 +51,8 @@ public class Robot extends IterativeRobot {
 		chooser.addObject("Right Start, Switch", rb.RSWITCH);
 		chooser.addObject("Auto Line Only", rb.AUTOLINE);
 		chooser.addDefault("None", rb.DEFAULT);
+		
+		CameraServer.getInstance().startAutomaticCapture();
 	}
 
 	//This function is run once before autonomousPeriodic() begins

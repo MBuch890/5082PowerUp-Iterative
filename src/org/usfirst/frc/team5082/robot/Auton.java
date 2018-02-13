@@ -13,7 +13,8 @@ public class Auton {
 	
 	//whenever auton is instantiated auto reset encoder
 	public Auton () {
-		rb.encoder.reset();
+		rb = new RobotBase();
+		//rb.encoder.reset();
 	}
 	
 	//for use in Robot.autoPeriodic() to make it less ugly/put it someplace else
@@ -26,30 +27,32 @@ public class Auton {
 		//RUNNING LEFT SIDE STARTING POSITION
 		else if (orientation == rb.LSWITCH) {
 			//If our alliance color on our switch is on the LEFT
-			if (true /*plateOrient.equalsIgnoreCase("L")*/) {
+			if (plateOrient.equalsIgnoreCase("L") && true) {
 				
 				SmartDashboard.putString("Running: ", "Left starting, Left side switch");
 				
 				//Drive forward 1 foot (UNTESTED)
-				if (!didDrove && actioNum == 0 && rb.encoder.getDistance() < 48) {
-					rb.drive.arcadeDrive(0.75, 0); //replace the 0 with a gyro based value later
+				/*if (!didDrove && actioNum == 0 && rb.encoder.getDistance() < 48) {
+					rb.arcadeDrive(0.75, 0); //replace the 0 with a gyro based value later, add PID
 				}
 				//Setup for next action
 				else {
-					rb.drive.arcadeDrive(0, 0);
+					rb.arcadeDrive(0, 0);
 					didDrove = true;
 					actioNum++;
-				}
+					System.out.println("Drive complete");
+				}*/
 				
 				//Turn 90 degrees (UNTESTED)
 				if (didDrove && !didTurn && actioNum == 1 && rb.gyro.getAngle() < 90) {
-					//TODO gyro based turn
+					//TODO gyro based turn with PID
 				}
 				//Setup for next action
 				else {
-					rb.drive.arcadeDrive(0, 0);
+					rb.arcadeDrive(0, 0);
 					didTurn = true;
 					actioNum++;
+					System.out.println("Turn complete");
 				}
 				
 				//Dump cube in switch (TODO)
@@ -57,7 +60,7 @@ public class Auton {
 				}
 				//Setup for next action
 				else {
-					rb.drive.arcadeDrive(0, 0);
+					rb.arcadeDrive(0, 0);
 					didDump = true;
 					actioNum++;
 				}
@@ -72,7 +75,7 @@ public class Auton {
 				}
 				//Setup for next action
 				else {
-					rb.drive.arcadeDrive(0, 0);
+					rb.arcadeDrive(0, 0);
 					didDrove = true;
 					actioNum++;
 				}
@@ -82,11 +85,11 @@ public class Auton {
 				}
 				//Setup for next action
 				else {
-					rb.drive.arcadeDrive(0, 0);
+					rb.arcadeDrive(0, 0);
 					didTurn = true;
 					didDrove = false;
 					actioNum++;
-					rb.encoder.reset();
+					//rb.encoder.reset();
 				}
 				
 				//Drive X ft (TODO)
@@ -94,7 +97,7 @@ public class Auton {
 				}
 				//Setup for next action
 				else {
-					rb.drive.arcadeDrive(0, 0);
+					rb.arcadeDrive(0, 0);
 					didDrove = true;
 					didTurn = false;
 					actioNum++;
@@ -105,11 +108,11 @@ public class Auton {
 				}
 				//Setup for next action
 				else {
-					rb.drive.arcadeDrive(0, 0);
+					rb.arcadeDrive(0, 0);
 					didTurn = true;
 					didDrove = false;
 					actioNum++;
-					rb.encoder.reset();
+					//rb.encoder.reset();
 				}
 				
 				//Drive X ft (TODO)
@@ -117,7 +120,7 @@ public class Auton {
 				}
 				//Setup for next action
 				else {
-					rb.drive.arcadeDrive(0, 0);
+					rb.arcadeDrive(0, 0);
 					didDrove = true;
 					actioNum++;
 				}
@@ -127,7 +130,7 @@ public class Auton {
 				}
 				//Setup for next action
 				else {
-					rb.drive.arcadeDrive(0, 0);
+					rb.arcadeDrive(0, 0);
 					didDump = true;
 					actioNum++;
 				}
@@ -144,7 +147,7 @@ public class Auton {
 				}
 				//Setup for next action
 				else {
-					rb.drive.arcadeDrive(0, 0);
+					rb.arcadeDrive(0, 0);
 					didDrove = true;
 					actioNum++;
 				}
@@ -154,11 +157,11 @@ public class Auton {
 				}
 				//Setup for next action
 				else {
-					rb.drive.arcadeDrive(0, 0);
+					rb.arcadeDrive(0, 0);
 					didTurn = true;
 					didDrove = false;
 					actioNum++;
-					rb.encoder.reset();
+					//rb.encoder.reset();
 				}
 				
 				//Drive X ft (TODO)
@@ -166,7 +169,7 @@ public class Auton {
 				}
 				//Setup for next action
 				else {
-					rb.drive.arcadeDrive(0, 0);
+					rb.arcadeDrive(0, 0);
 					didDrove = true;
 					didTurn = false;
 					actioNum++;
@@ -177,11 +180,11 @@ public class Auton {
 				}
 				//Setup for next action
 				else {
-					rb.drive.arcadeDrive(0, 0);
+					rb.arcadeDrive(0, 0);
 					didTurn = true;
 					didDrove = false;
 					actioNum++;
-					rb.encoder.reset();
+					//rb.encoder.reset();
 				}
 				
 				//Drive X ft (TODO)
@@ -189,7 +192,7 @@ public class Auton {
 				}
 				//Setup for next action
 				else {
-					rb.drive.arcadeDrive(0, 0);
+					rb.arcadeDrive(0, 0);
 					didDrove = true;
 					actioNum++;
 				}
@@ -199,7 +202,7 @@ public class Auton {
 				}
 				//Setup for next action
 				else {
-					rb.drive.arcadeDrive(0, 0);
+					rb.arcadeDrive(0, 0);
 					didDump = true;
 					actioNum++;
 				}
@@ -214,7 +217,7 @@ public class Auton {
 				}
 				//Setup for next action
 				else {
-					rb.drive.arcadeDrive(0, 0);
+					rb.arcadeDrive(0, 0);
 					didDrove = true;
 					actioNum++;
 				}
@@ -224,11 +227,11 @@ public class Auton {
 				}
 				//Setup for next action
 				else {
-					rb.drive.arcadeDrive(0, 0);
+					rb.arcadeDrive(0, 0);
 					didTurn = true;
 					didDrove = false;
 					actioNum++;
-					rb.encoder.reset();
+					//rb.encoder.reset();
 				}
 				
 				//Drive X ft (TODO)
@@ -236,7 +239,7 @@ public class Auton {
 				}
 				//Setup for next action
 				else {
-					rb.drive.arcadeDrive(0, 0);
+					rb.arcadeDrive(0, 0);
 					didDrove = true;
 					didTurn = false;
 					actioNum++;
@@ -247,11 +250,11 @@ public class Auton {
 				}
 				//Setup for next action
 				else {
-					rb.drive.arcadeDrive(0, 0);
+					rb.arcadeDrive(0, 0);
 					didTurn = true;
 					didDrove = false;
 					actioNum++;
-					rb.encoder.reset();
+					//rb.encoder.reset();
 				}
 				
 				//Drive X ft (TODO)
@@ -259,7 +262,7 @@ public class Auton {
 				}
 				//Setup for next action
 				else {
-					rb.drive.arcadeDrive(0, 0);
+					rb.arcadeDrive(0, 0);
 					didDrove = true;
 					actioNum++;
 				}
@@ -269,7 +272,7 @@ public class Auton {
 				}
 				//Setup for next action
 				else {
-					rb.drive.arcadeDrive(0, 0);
+					rb.arcadeDrive(0, 0);
 					didDump = true;
 					actioNum++;
 				}
@@ -286,7 +289,7 @@ public class Auton {
 				}
 				//Setup for next action
 				else {
-					rb.drive.arcadeDrive(0, 0);
+					rb.arcadeDrive(0, 0);
 					didDrove = true;
 					actioNum++;
 				}
@@ -296,11 +299,11 @@ public class Auton {
 				}
 				//Setup for next action
 				else {
-					rb.drive.arcadeDrive(0, 0);
+					rb.arcadeDrive(0, 0);
 					didTurn = true;
 					didDrove = false;
 					actioNum++;
-					rb.encoder.reset();
+					//rb.encoder.reset();
 				}
 				
 				//Drive X ft (TODO)
@@ -308,7 +311,7 @@ public class Auton {
 				}
 				//Setup for next action
 				else {
-					rb.drive.arcadeDrive(0, 0);
+					rb.arcadeDrive(0, 0);
 					didDrove = true;
 					didTurn = false;
 					actioNum++;
@@ -319,11 +322,11 @@ public class Auton {
 				}
 				//Setup for next action
 				else {
-					rb.drive.arcadeDrive(0, 0);
+					rb.arcadeDrive(0, 0);
 					didTurn = true;
 					didDrove = false;
 					actioNum++;
-					rb.encoder.reset();
+					//rb.encoder.reset();
 				}
 				
 				//Drive X ft (TODO)
@@ -331,7 +334,7 @@ public class Auton {
 				}
 				//Setup for next action
 				else {
-					rb.drive.arcadeDrive(0, 0);
+					rb.arcadeDrive(0, 0);
 					didDrove = true;
 					actioNum++;
 				}
@@ -341,7 +344,7 @@ public class Auton {
 				}
 				//Setup for next action
 				else {
-					rb.drive.arcadeDrive(0, 0);
+					rb.arcadeDrive(0, 0);
 					didDump = true;
 					actioNum++;
 				}
@@ -356,7 +359,7 @@ public class Auton {
 				}
 				//Setup for next action
 				else {
-					rb.drive.arcadeDrive(0, 0);
+					rb.arcadeDrive(0, 0);
 					didDrove = true;
 					actioNum++;
 				}
@@ -366,7 +369,7 @@ public class Auton {
 				}
 				//Setup for next action
 				else {
-					rb.drive.arcadeDrive(0, 0);
+					rb.arcadeDrive(0, 0);
 					didTurn = true;
 					actioNum++;
 				}
@@ -376,7 +379,7 @@ public class Auton {
 				}
 				//Setup for next action
 				else {
-					rb.drive.arcadeDrive(0, 0);
+					rb.arcadeDrive(0, 0);
 					didDump = true;
 					actioNum++;
 				}
@@ -387,7 +390,7 @@ public class Auton {
 			SmartDashboard.putString("Running: ", "Auto Line Only");
 			
 			if (rb.encoder.getDistance() < 120) {
-				rb.drive.arcadeDrive(0.75, 0);
+				rb.arcadeDrive(0.75, 0);
 			}
 			
 		}

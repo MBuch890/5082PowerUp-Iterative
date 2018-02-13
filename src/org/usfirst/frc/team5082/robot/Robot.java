@@ -79,10 +79,10 @@ public class Robot extends IterativeRobot {
 	public void autonomousPeriodic() {
 		
 		//what is the way things are set up (like the randomized plats)
-		String orientation = (DS.getGameSpecificMessage()).substring(0, 1);
+		//String orientation = (DS.getGameSpecificMessage()).substring(0, 1);
 		
 		//run auto only while the ds is on
-		if(DS.isEnabled()) auton.autoPeriodic(autoChooser, orientation);
+		if(DS.isEnabled()) auton.autoPeriodic(autoChooser, "L");
 		else {
 			rb.topCims.arcadeDrive(0, 0);
 			rb.midCims.arcadeDrive(0, 0);

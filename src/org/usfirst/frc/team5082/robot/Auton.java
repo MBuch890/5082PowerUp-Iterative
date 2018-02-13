@@ -4,6 +4,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Auton {
 	
+	//for PID control (later)
+	double kP = 1;
+	double kI = 1;
+	double kD = 1;
+	
 	//create instance of the rb
 	private RobotBase rb;
 	
@@ -14,7 +19,7 @@ public class Auton {
 	//whenever auton is instantiated auto reset encoder
 	public Auton () {
 		rb = new RobotBase();
-		//rb.encoder.reset();
+		rb.encoder.reset();
 	}
 	
 	//for use in Robot.autoPeriodic() to make it less ugly/put it someplace else

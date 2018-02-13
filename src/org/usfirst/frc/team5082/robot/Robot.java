@@ -16,11 +16,6 @@ import edu.wpi.first.wpilibj.Timer;
  */
 public class Robot extends IterativeRobot {
 	
-	//for PID control (later)
-	double kP = 1;
-	double kI = 1;
-	double kD = 1;
-	
 	Auton auton;
 	RobotBase rb;
 	Joystick joy;																		//joystick for 1 driver arcade drive
@@ -30,8 +25,6 @@ public class Robot extends IterativeRobot {
 	DriverStation DS;
 	
 	SendableChooser<Integer> chooser = new SendableChooser<Integer>();					//communicates what auto got chose, pt 1
-	
-	double speed, rotation;																//to be fed into arcadeDrive()
 	int autoChooser;																	//communicates what auto got chose, pt 2
 
 	/**

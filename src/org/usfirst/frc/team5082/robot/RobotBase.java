@@ -3,8 +3,6 @@ package org.usfirst.frc.team5082.robot;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Spark;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 
@@ -32,6 +30,7 @@ public class RobotBase {
 	public RobotBase () {
 		
 		//instantiate encoder
+		encoder = new Encoder(0, 1);
 		gyro = new ADXRS450_Gyro();
 		
 		//create instances of motors
@@ -43,12 +42,12 @@ public class RobotBase {
 		mMidRight = new Spark(4);
 		
 		//setting the multiplier used for getDistance();
-		//encoder.setDistancePerPulse(PULSE_PER_REVOLUTION / (WHEEL_DIAMETER_IN * Math.PI));
+		encoder.setDistancePerPulse(PULSE_PER_REVOLUTION / (WHEEL_DIAMETER_IN * Math.PI));
 		
 		//setup drive base
-		DifferentialDrive topCims = new DifferentialDrive(mTopLeft,mTopRight);
-		DifferentialDrive midCims = new DifferentialDrive(mMidLeft, mMidRight);
-		DifferentialDrive bottomCims = new DifferentialDrive(mBackLeft, mBackRight);
+		topCims = new DifferentialDrive(mTopLeft,mTopRight);
+		midCims = new DifferentialDrive(mMidLeft, mMidRight);
+		bottomCims = new DifferentialDrive(mBackLeft, mBackRight);
 		
 	}
 	

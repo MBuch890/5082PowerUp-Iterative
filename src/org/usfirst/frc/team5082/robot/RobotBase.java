@@ -1,6 +1,7 @@
 package org.usfirst.frc.team5082.robot;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -20,17 +21,21 @@ public class RobotBase {
 	final int RSWITCH = 3;
 	final int AUTOLINE = 4;
 	
-	Spark mTopLeft, mMidLeft, mBackLeft, mTopRight, mMidRight, mBackRight;				//drive motors
-	DifferentialDrive topCims, midCims, bottomCims;															//drive base w all drive motors
+	DoubleSolenoid sClamp;
+	Spark mTopLeft, mMidLeft, mBackLeft, mTopRight, mMidRight, mBackRight, mSpool;		//motors
+	DifferentialDrive topCims, midCims, bottomCims;										//drive base w all drive motors
 	
 	Encoder encoder;																	//measuring the distance driven
 	Gyro gyro;																			//measuring the angle turned
+	
+	//DoubleSolenoid ramp1 = new DoubleSolenoid(1,0);
+	//DoubleSolenoid ramp2 = new DoubleSolenoid(3,2);
 	
 	//whenever someone instantiates rb do all that automatically
 	public RobotBase () {
 		
 		//instantiate encoder
-		encoder = new Encoder(0, 1);
+		encoder = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
 		gyro = new ADXRS450_Gyro();
 		
 		//create instances of motors
@@ -41,6 +46,10 @@ public class RobotBase {
 		mBackLeft = new Spark(2);
 		mMidRight = new Spark(4);
 		
+		mSpool = new Spark(8);
+		
+		sClamp = new DoubleSolenoid(4, 5);
+		
 		//setting the multiplier used for getDistance();
 		encoder.setDistancePerPulse(PULSE_PER_REVOLUTION / (WHEEL_DIAMETER_IN * Math.PI));
 		
@@ -50,6 +59,10 @@ public class RobotBase {
 		bottomCims = new DifferentialDrive(mBackLeft, mBackRight);
 		
 	}
+	
+	public void runSpool(double pwr) { mSpool.set(pwr); }
+	
+	public void setSafetyEnabled(boolean enabled) {topCims.setSafetyEnabled(enabled); midCims.setSafetyEnabled(enabled); bottomCims.setSafetyEnabled(enabled);}
 	
 	public void arcadeDrive(double forwardPwr, double turnPwr) {topCims.arcadeDrive(forwardPwr, turnPwr); midCims.arcadeDrive(forwardPwr, turnPwr); bottomCims.arcadeDrive(forwardPwr, turnPwr);}
 }

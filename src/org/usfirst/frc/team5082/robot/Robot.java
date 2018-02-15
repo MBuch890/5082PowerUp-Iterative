@@ -1,6 +1,7 @@
 package org.usfirst.frc.team5082.robot;
 
 import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -53,6 +54,7 @@ public class Robot extends IterativeRobot {
 		chooser.addDefault("None", rb.DEFAULT);
 		
 		CameraServer.getInstance().startAutomaticCapture();
+		rb.setSafetyEnabled(false);
 	}
 
 	//This function is run once before autonomousPeriodic() begins
@@ -74,15 +76,13 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		
-		//what is the way things are set up (like the randomized plats)
+		//what is the way things are set up (like the randomized plates)
 		//String orientation = (DS.getGameSpecificMessage()).substring(0, 1);
 		
 		//run auto only while the ds is on
 		if(DS.isEnabled()) auton.autoPeriodic(autoChooser, "L");
 		else {
-			rb.topCims.arcadeDrive(0, 0);
-			rb.midCims.arcadeDrive(0, 0);
-			rb.bottomCims.arcadeDrive(0, 0);
+			rb.arcadeDrive(0, 0);
 		}
 		
 	}
@@ -101,14 +101,36 @@ public class Robot extends IterativeRobot {
 			SmartDashboard.putNumber("Your Orientation: ", rb.gyro.getAngle());
 			
 			//driving with same joys as last year (change if requested to)
-			rb.topCims.arcadeDrive(joy.getRawAxis(1), joy.getRawAxis(4));
-			rb.midCims.arcadeDrive(joy.getRawAxis(1), joy.getRawAxis(4));
-			rb.bottomCims.arcadeDrive(joy.getRawAxis(1), joy.getRawAxis(4));
+			rb.arcadeDrive(joy.getRawAxis(1), joy.getRawAxis(4));
+			
+			if (joy.getRawButtonPressed(1))			//A
+				System.out.println("Button 1");		
+			if (joy.getRawButtonPressed(2))			//B
+				System.out.println("Button 2");
+			if (joy.getRawButtonPressed(3))			//X button
+				System.out.println("Button 3");
+			if (joy.getRawButtonPressed(4))
+				System.out.println("Button 4");		//Y
+			
+			if (joy.getRawButtonPressed(5)) {
+				System.out.println("Button 5");		//LB
+				rb.sClamp.set(DoubleSolenoid.Value.kForward);
+			}
+			else if (joy.getRawButton(6)) {
+				System.out.println("Button 6");		//RB
+				rb.sClamp.set(DoubleSolenoid.Value.kReverse);
+			}
+			
+			
+			//ramp1.set(DoubleSolenoid.Value.kForward);
+			//ramp2.set(DoubleSolenoid.Value.kForward);
+			//ramp1.set(DoubleSolenoid.Value.kReverse);
+			//ramp2.set(DoubleSolenoid.Value.kReverse);	
+			
+			//rb.runSpool(0.75);
 		}
 		else {
-			rb.topCims.arcadeDrive(0, 0);
-			rb.midCims.arcadeDrive(0, 0);
-			rb.bottomCims.arcadeDrive(0, 0);
+			rb.arcadeDrive(0, 0);
 		}
 	}
 
@@ -117,9 +139,6 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void testPeriodic() {
-		
-		//THIS IS FOR TESTING so nothing here is sacred
-		SmartDashboard.putNumber("Encoder Counts", rb.encoder.get());
 		
 	}
 }

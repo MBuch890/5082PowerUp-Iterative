@@ -32,28 +32,34 @@ public class Auton {
 		//RUNNING LEFT SIDE STARTING POSITION
 		else if (orientation == rb.LSWITCH) {
 			//If our alliance color on our switch is on the LEFT
-			if (plateOrient.equalsIgnoreCase("L") && true) {
+			if (plateOrient.equalsIgnoreCase("L") || true) {
 				
 				SmartDashboard.putString("Running: ", "Left starting, Left side switch");
 				
-				//Drive forward 1 foot (UNTESTED)
-				/*if (!didDrove && actioNum == 0 && rb.encoder.getDistance() < 48) {
-					rb.arcadeDrive(0.75, 0); //replace the 0 with a gyro based value later, add PID
+				//Drive forward 4 ft (UNTESTED)
+				if (!didDrove && actioNum == 0 && rb.encoder.getDistance() < 48) {
+					rb.arcadeDrive(0.75, 0); //TODO add PID speed control and gyro angle control
 				}
 				//Setup for next action
 				else {
+					kP = 0;
+					kI = 0;
+					kD = 0;
 					rb.arcadeDrive(0, 0);
 					didDrove = true;
 					actioNum++;
 					System.out.println("Drive complete");
-				}*/
+				}
 				
 				//Turn 90 degrees (UNTESTED)
 				if (didDrove && !didTurn && actioNum == 1 && rb.gyro.getAngle() < 90) {
-					//TODO gyro based turn with PID
+					rb.arcadeDrive(0, 0.75);//TODO add PID speed control
 				}
 				//Setup for next action
 				else {
+					kP = 0;
+					kI = 0;
+					kD = 0;
 					rb.arcadeDrive(0, 0);
 					didTurn = true;
 					actioNum++;
@@ -65,6 +71,9 @@ public class Auton {
 				}
 				//Setup for next action
 				else {
+					kP = 0;
+					kI = 0;
+					kD = 0;
 					rb.arcadeDrive(0, 0);
 					didDump = true;
 					actioNum++;
@@ -80,6 +89,9 @@ public class Auton {
 				}
 				//Setup for next action
 				else {
+					kP = 0;
+					kI = 0;
+					kD = 0;
 					rb.arcadeDrive(0, 0);
 					didDrove = true;
 					actioNum++;
@@ -90,6 +102,9 @@ public class Auton {
 				}
 				//Setup for next action
 				else {
+					kP = 0;
+					kI = 0;
+					kD = 0;
 					rb.arcadeDrive(0, 0);
 					didTurn = true;
 					didDrove = false;
@@ -102,6 +117,9 @@ public class Auton {
 				}
 				//Setup for next action
 				else {
+					kP = 0;
+					kI = 0;
+					kD = 0;
 					rb.arcadeDrive(0, 0);
 					didDrove = true;
 					didTurn = false;
@@ -113,6 +131,9 @@ public class Auton {
 				}
 				//Setup for next action
 				else {
+					kP = 0;
+					kI = 0;
+					kD = 0;
 					rb.arcadeDrive(0, 0);
 					didTurn = true;
 					didDrove = false;
@@ -125,6 +146,9 @@ public class Auton {
 				}
 				//Setup for next action
 				else {
+					kP = 0;
+					kI = 0;
+					kD = 0;
 					rb.arcadeDrive(0, 0);
 					didDrove = true;
 					actioNum++;
@@ -135,6 +159,9 @@ public class Auton {
 				}
 				//Setup for next action
 				else {
+					kP = 0;
+					kI = 0;
+					kD = 0;
 					rb.arcadeDrive(0, 0);
 					didDump = true;
 					actioNum++;
@@ -152,6 +179,9 @@ public class Auton {
 				}
 				//Setup for next action
 				else {
+					kP = 0;
+					kI = 0;
+					kD = 0;
 					rb.arcadeDrive(0, 0);
 					didDrove = true;
 					actioNum++;
@@ -162,11 +192,14 @@ public class Auton {
 				}
 				//Setup for next action
 				else {
+					kP = 0;
+					kI = 0;
+					kD = 0;
 					rb.arcadeDrive(0, 0);
 					didTurn = true;
 					didDrove = false;
 					actioNum++;
-					//rb.encoder.reset();
+					rb.encoder.reset();
 				}
 				
 				//Drive X ft (TODO)
@@ -174,6 +207,9 @@ public class Auton {
 				}
 				//Setup for next action
 				else {
+					kP = 0;
+					kI = 0;
+					kD = 0;
 					rb.arcadeDrive(0, 0);
 					didDrove = true;
 					didTurn = false;
@@ -185,11 +221,14 @@ public class Auton {
 				}
 				//Setup for next action
 				else {
+					kP = 0;
+					kI = 0;
+					kD = 0;
 					rb.arcadeDrive(0, 0);
 					didTurn = true;
 					didDrove = false;
 					actioNum++;
-					//rb.encoder.reset();
+					rb.encoder.reset();
 				}
 				
 				//Drive X ft (TODO)
@@ -197,6 +236,9 @@ public class Auton {
 				}
 				//Setup for next action
 				else {
+					kP = 0;
+					kI = 0;
+					kD = 0;
 					rb.arcadeDrive(0, 0);
 					didDrove = true;
 					actioNum++;
@@ -207,6 +249,9 @@ public class Auton {
 				}
 				//Setup for next action
 				else {
+					kP = 0;
+					kI = 0;
+					kD = 0;
 					rb.arcadeDrive(0, 0);
 					didDump = true;
 					actioNum++;
@@ -222,6 +267,9 @@ public class Auton {
 				}
 				//Setup for next action
 				else {
+					kP = 0;
+					kI = 0;
+					kD = 0;
 					rb.arcadeDrive(0, 0);
 					didDrove = true;
 					actioNum++;
@@ -232,11 +280,14 @@ public class Auton {
 				}
 				//Setup for next action
 				else {
+					kP = 0;
+					kI = 0;
+					kD = 0;
 					rb.arcadeDrive(0, 0);
 					didTurn = true;
 					didDrove = false;
 					actioNum++;
-					//rb.encoder.reset();
+					rb.encoder.reset();
 				}
 				
 				//Drive X ft (TODO)
@@ -244,6 +295,9 @@ public class Auton {
 				}
 				//Setup for next action
 				else {
+					kP = 0;
+					kI = 0;
+					kD = 0;
 					rb.arcadeDrive(0, 0);
 					didDrove = true;
 					didTurn = false;
@@ -255,6 +309,9 @@ public class Auton {
 				}
 				//Setup for next action
 				else {
+					kP = 0;
+					kI = 0;
+					kD = 0;
 					rb.arcadeDrive(0, 0);
 					didTurn = true;
 					didDrove = false;
@@ -267,6 +324,9 @@ public class Auton {
 				}
 				//Setup for next action
 				else {
+					kP = 0;
+					kI = 0;
+					kD = 0;
 					rb.arcadeDrive(0, 0);
 					didDrove = true;
 					actioNum++;
@@ -277,6 +337,9 @@ public class Auton {
 				}
 				//Setup for next action
 				else {
+					kP = 0;
+					kI = 0;
+					kD = 0;
 					rb.arcadeDrive(0, 0);
 					didDump = true;
 					actioNum++;
@@ -294,6 +357,9 @@ public class Auton {
 				}
 				//Setup for next action
 				else {
+					kP = 0;
+					kI = 0;
+					kD = 0;
 					rb.arcadeDrive(0, 0);
 					didDrove = true;
 					actioNum++;
@@ -304,11 +370,14 @@ public class Auton {
 				}
 				//Setup for next action
 				else {
+					kP = 0;
+					kI = 0;
+					kD = 0;
 					rb.arcadeDrive(0, 0);
 					didTurn = true;
 					didDrove = false;
 					actioNum++;
-					//rb.encoder.reset();
+					rb.encoder.reset();
 				}
 				
 				//Drive X ft (TODO)
@@ -316,6 +385,9 @@ public class Auton {
 				}
 				//Setup for next action
 				else {
+					kP = 0;
+					kI = 0;
+					kD = 0;
 					rb.arcadeDrive(0, 0);
 					didDrove = true;
 					didTurn = false;
@@ -327,11 +399,14 @@ public class Auton {
 				}
 				//Setup for next action
 				else {
+					kP = 0;
+					kI = 0;
+					kD = 0;
 					rb.arcadeDrive(0, 0);
 					didTurn = true;
 					didDrove = false;
 					actioNum++;
-					//rb.encoder.reset();
+					rb.encoder.reset();
 				}
 				
 				//Drive X ft (TODO)
@@ -339,6 +414,9 @@ public class Auton {
 				}
 				//Setup for next action
 				else {
+					kP = 0;
+					kI = 0;
+					kD = 0;
 					rb.arcadeDrive(0, 0);
 					didDrove = true;
 					actioNum++;
@@ -349,6 +427,9 @@ public class Auton {
 				}
 				//Setup for next action
 				else {
+					kP = 0;
+					kI = 0;
+					kD = 0;
 					rb.arcadeDrive(0, 0);
 					didDump = true;
 					actioNum++;
@@ -364,6 +445,9 @@ public class Auton {
 				}
 				//Setup for next action
 				else {
+					kP = 0;
+					kI = 0;
+					kD = 0;
 					rb.arcadeDrive(0, 0);
 					didDrove = true;
 					actioNum++;
@@ -374,6 +458,9 @@ public class Auton {
 				}
 				//Setup for next action
 				else {
+					kP = 0;
+					kI = 0;
+					kD = 0;
 					rb.arcadeDrive(0, 0);
 					didTurn = true;
 					actioNum++;
@@ -384,6 +471,9 @@ public class Auton {
 				}
 				//Setup for next action
 				else {
+					kP = 0;
+					kI = 0;
+					kD = 0;
 					rb.arcadeDrive(0, 0);
 					didDump = true;
 					actioNum++;

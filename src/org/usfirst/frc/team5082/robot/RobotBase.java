@@ -1,6 +1,7 @@
 package org.usfirst.frc.team5082.robot;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Spark;
@@ -21,6 +22,8 @@ public class RobotBase {
 	final int RSWITCH = 3;
 	final int AUTOLINE = 4;
 	
+	Compressor compressor;
+	
 	DoubleSolenoid sClamp;
 	Spark mTopLeft, mMidLeft, mBackLeft, mTopRight, mMidRight, mBackRight, mSpool;		//motors
 	DifferentialDrive topCims, midCims, bottomCims;										//drive base w all drive motors
@@ -37,6 +40,7 @@ public class RobotBase {
 		//instantiate encoder
 		encoder = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
 		gyro = new ADXRS450_Gyro();
+		compressor = new Compressor(1);
 		
 		//create instances of motors
 		mTopLeft = new Spark(0);

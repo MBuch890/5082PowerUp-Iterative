@@ -55,6 +55,8 @@ public class Robot extends IterativeRobot {
 		
 		CameraServer.getInstance().startAutomaticCapture();
 		rb.setSafetyEnabled(false);
+		
+		rb.compressor.setClosedLoopControl(true);
 	}
 
 	//This function is run once before autonomousPeriodic() begins
@@ -101,16 +103,27 @@ public class Robot extends IterativeRobot {
 			SmartDashboard.putNumber("Your Orientation: ", rb.gyro.getAngle());
 			
 			//driving with same joys as last year (change if requested to)
-			rb.arcadeDrive(joy.getRawAxis(1), joy.getRawAxis(4));
+			rb.arcadeDrive(joy.getRawAxis(1), -joy.getRawAxis(4));
 			
-			if (joy.getRawButtonPressed(1))			//A
-				System.out.println("Button 1");		
-			if (joy.getRawButtonPressed(2))			//B
-				System.out.println("Button 2");
+			if (joy.getRawButtonPressed(1))	{		//A
+				rb.mSpool.set(0.75);
+				System.out.println(rb.mSpool.get());
+			}
+			else if (joy.getRawButtonPressed(2)) {	//B
+				rb.mSpool.set(-0.75);
+				System.out.println(rb.mSpool.get());
+			}
+			else {
+				rb.mSpool.set(0);
+				System.out.println(rb.mSpool.get());
+			}
+			
+			
 			if (joy.getRawButtonPressed(3))			//X button
 				System.out.println("Button 3");
 			if (joy.getRawButtonPressed(4))
 				System.out.println("Button 4");		//Y
+			
 			
 			if (joy.getRawButtonPressed(5)) {
 				System.out.println("Button 5");		//LB

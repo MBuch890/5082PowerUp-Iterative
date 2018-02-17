@@ -28,7 +28,9 @@ public class Robot extends IterativeRobot {
 	
 	SendableChooser<Integer> chooser = new SendableChooser<Integer>();					//communicates what auto got chose, pt 1
 	int autoChooser;																	//communicates what auto got chose, pt 2
-
+	boolean recentlyPressedA, recentlyPressedB;
+	double time;
+	
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -57,6 +59,9 @@ public class Robot extends IterativeRobot {
 		rb.setSafetyEnabled(false);
 		
 		rb.compressor.setClosedLoopControl(true);
+		
+		recentlyPressedA = false;
+		recentlyPressedB = false;
 	}
 
 	//This function is run once before autonomousPeriodic() begins
@@ -100,50 +105,50 @@ public class Robot extends IterativeRobot {
 			//printing msgs to dash
 			SmartDashboard.putNumber("Encoder Distance: ", rb.encoder.getDistance());
 			SmartDashboard.putNumber("Match Timer: ", 135 - timer.get());
-			SmartDashboard.putNumber("Your Orientation: ", rb.gyro.getAngle());
+			SmartDashboard.putNumber("Gyro Orientation: ", rb.gyro.getAngle());
+			SmartDashboard.putNumber("Accel X value: ", rb.accel.getX());
+			SmartDashboard.putNumber("Accel Y value: ", rb.accel.getY());
+			SmartDashboard.putNumber("Accel Z value: ", rb.accel.getZ());
 			
-			//driving with same joys as last year (change if requested to)
 			rb.arcadeDrive(joy.getRawAxis(1), -joy.getRawAxis(4));
 			
-			if (joy.getRawButtonPressed(1))	{		//A
-				rb.mSpool.set(0.75);
-				System.out.println(rb.mSpool.get());
+			if (joy.getRawButton(1)) {							//A
+				rb.mSpool.set(1);
+				System.out.println("Power on");
 			}
-			else if (joy.getRawButtonPressed(2)) {	//B
-				rb.mSpool.set(-0.75);
-				System.out.println(rb.mSpool.get());
+			else if (joy.getRawButton(2)) {						//B
+				rb.mSpool.set(-0.15);
+				System.out.println("Power on");
 			}
 			else {
 				rb.mSpool.set(0);
-				System.out.println(rb.mSpool.get());
+				System.out.println("Power off");
 			}
 			
+			if (joy.getRawButton(3))							//X
+				rb.sRamp.set(DoubleSolenoid.Value.kForward);
+			else if (joy.getRawButton(4))						//Y
+				rb.sRamp.set(DoubleSolenoid.Value.kReverse);
+			else
+				rb.sRamp.set(DoubleSolenoid.Value.kOff);
 			
-			if (joy.getRawButtonPressed(3))			//X button
-				System.out.println("Button 3");
-			if (joy.getRawButtonPressed(4))
-				System.out.println("Button 4");		//Y
 			
-			
-			if (joy.getRawButtonPressed(5)) {
-				System.out.println("Button 5");		//LB
+			if (joy.getRawButton(5)) {
+				System.out.println("Button 5");					//LB
 				rb.sClamp.set(DoubleSolenoid.Value.kForward);
 			}
 			else if (joy.getRawButton(6)) {
-				System.out.println("Button 6");		//RB
+				System.out.println("Button 6");					//RB
 				rb.sClamp.set(DoubleSolenoid.Value.kReverse);
 			}
-			
-			
-			//ramp1.set(DoubleSolenoid.Value.kForward);
-			//ramp2.set(DoubleSolenoid.Value.kForward);
-			//ramp1.set(DoubleSolenoid.Value.kReverse);
-			//ramp2.set(DoubleSolenoid.Value.kReverse);	
-			
-			//rb.runSpool(0.75);
+			else
+				rb.sClamp.set(DoubleSolenoid.Value.kOff);
+		
 		}
 		else {
 			rb.arcadeDrive(0, 0);
+			rb.sClamp.set(DoubleSolenoid.Value.kOff);
+			rb.mSpool.set(0);
 		}
 	}
 

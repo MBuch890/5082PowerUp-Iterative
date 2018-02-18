@@ -16,6 +16,14 @@ import edu.wpi.first.wpilibj.Timer;
  * creating this project, you must also update the manifest file in the resource
  * directory.
  */
+
+/* TODO (X for needs done before season over, O for whenever)
+ *    finish testing clamp 						X				(ready to go when bot is available)
+ *    integrate gyro & accel					X				(code needs written)
+ *    finish elevator testing					X				(blocked by mechanical)
+ *    write out and test autos					X				(code needs written, blocked by mechanical to test)
+ *    test new controls							X				(ready to go when bot is available)
+ */
 public class Robot extends IterativeRobot {
 	
 	Auton auton;
@@ -28,8 +36,8 @@ public class Robot extends IterativeRobot {
 	
 	SendableChooser<Integer> chooser = new SendableChooser<Integer>();					//communicates what auto got chose, pt 1
 	int autoChooser;																	//communicates what auto got chose, pt 2
-	boolean recentlyPressedA, recentlyPressedB;
-	double time;
+	boolean justOpenedClamp, justPressedA;
+	double time, timeRamp;
 	
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -60,8 +68,9 @@ public class Robot extends IterativeRobot {
 		
 		rb.compressor.setClosedLoopControl(true);
 		
-		recentlyPressedA = false;
-		recentlyPressedB = false;
+		justOpenedClamp = false;
+		justPressedA = false;
+		timeRamp = 0;
 	}
 
 	//This function is run once before autonomousPeriodic() begins
@@ -110,13 +119,20 @@ public class Robot extends IterativeRobot {
 			SmartDashboard.putNumber("Accel Y value: ", rb.accel.getY());
 			SmartDashboard.putNumber("Accel Z value: ", rb.accel.getZ());
 			
+			if (joy.getRawAxis(5) > 0.5)
+				System.out.println("Joy Raw Axis 5");
+			if (joy.getRawAxis(6) > 0.5)
+				System.out.println("Joy Raw Axis 6");
+			
+			//DRIVE
 			rb.arcadeDrive(joy.getRawAxis(1), -joy.getRawAxis(4));
 			
-			if (joy.getRawButton(1)) {							//A
+			//ELEVATOR
+			if (joy.getRawButton(3)) {							
 				rb.mSpool.set(1);
 				System.out.println("Power on");
 			}
-			else if (joy.getRawButton(2)) {						//B
+			else if (joy.getRawButton(4)) {					
 				rb.mSpool.set(-0.15);
 				System.out.println("Power on");
 			}
@@ -125,30 +141,39 @@ public class Robot extends IterativeRobot {
 				System.out.println("Power off");
 			}
 			
-			if (joy.getRawButton(3))							//X
+			//RAMP - LB and RB
+			if (joy.getRawButton(5) && joy.getRawButton(6) && timeRamp == 0) {
+				timeRamp = System.currentTimeMillis();
+			}
+			else if (joy.getRawButton(5) && joy.getRawButton(6) && (System.currentTimeMillis() - timeRamp) >= 1000)
 				rb.sRamp.set(DoubleSolenoid.Value.kForward);
-			else if (joy.getRawButton(4))						//Y
-				rb.sRamp.set(DoubleSolenoid.Value.kReverse);
-			else
-				rb.sRamp.set(DoubleSolenoid.Value.kOff);
 			
-			
-			if (joy.getRawButton(5)) {
-				System.out.println("Button 5");					//LB
+			//CLAMP
+			if (joy.getRawButton(1) && !justPressedA) {					
 				rb.sClamp.set(DoubleSolenoid.Value.kForward);
+				justOpenedClamp = true;
+				//justPressedA = true;
+				//time = System.currentTimeMillis();
 			}
-			else if (joy.getRawButton(6)) {
-				System.out.println("Button 6");					//RB
+			else if (joy.getRawButton(2) /*&& (System.currentTimeMillis() - time) >= 200 && justPressedA*/) {						
 				rb.sClamp.set(DoubleSolenoid.Value.kReverse);
+				justOpenedClamp = false;
+				justPressedA = false;
 			}
-			else
-				rb.sClamp.set(DoubleSolenoid.Value.kOff);
+			if (justOpenedClamp && (System.currentTimeMillis() - time) >= 100) {
+				rb.sClamPush.set(true);
+			}
+			else {
+				rb.sClamPush.set(false);
+			}
 		
 		}
 		else {
 			rb.arcadeDrive(0, 0);
 			rb.sClamp.set(DoubleSolenoid.Value.kOff);
 			rb.mSpool.set(0);
+			rb.sRamp.set(DoubleSolenoid.Value.kOff);
+			rb.sClamPush.set(false);
 		}
 	}
 

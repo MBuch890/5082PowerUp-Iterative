@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.interfaces.Accelerometer;
@@ -31,6 +32,7 @@ public class RobotBase {
 	
 	Compressor compressor;
 	
+	Solenoid sClamPush;
 	DoubleSolenoid sClamp;
 	DoubleSolenoid sRamp;
 	Spark mTopLeft, mMidLeft, mBackLeft, mTopRight, mMidRight, mBackRight, mSpool;		//motors
@@ -61,6 +63,7 @@ public class RobotBase {
 		
 		sRamp = new DoubleSolenoid(0, 1);
 		sClamp = new DoubleSolenoid(4, 5);
+		sClamPush = new Solenoid(7);
 		
 		//setting the multiplier used for getDistance();
 		encoder.setDistancePerPulse(PULSE_PER_REVOLUTION / (WHEEL_DIAMETER_IN * Math.PI));

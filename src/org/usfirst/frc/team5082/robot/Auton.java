@@ -10,16 +10,15 @@ public class Auton {
 	//make the vars you need to jump thru ifs
 	private boolean didDrove = false, didTurn = false, didDump = false;
 	private int actioNum = 0;
-	private double error;
-	private double integral;
 	
-	private double drivePower = 0;
+	private double drivePower = 0, turnPower = 0;
+	
+	private double startTime, currentTime;
 	
 	//whenever auton is instantiated auto reset encoder
 	public Auton () {
 		rb = new RobotBase();
-		rb.encoder.reset();
-		rb.gyro.reset();
+		startTime = System.currentTimeMillis();
 	}
 	
 	//for use in Robot.autoPeriodic() to make it less ugly/put it someplace else
@@ -35,15 +34,14 @@ public class Auton {
 			if (plateOrient.equalsIgnoreCase("L") || true) {
 				
 				SmartDashboard.putString("Running: ", "Left starting, Left side switch");
+				currentTime = System.currentTimeMillis();
 				
-				//Drive forward 4 ft (UNTESTED)
-				if (!didDrove && actioNum == 0 && rb.encoder.getDistance() < 48) {
-					error = 48 - rb.encoder.getDistance();
-					integral += error * 0.02;
-					drivePower = (rb.kP * error) + (rb.kI * integral);
+				//Drive forward 2 secs (UNTESTED)
+				if (!didDrove && actioNum == 0 && (currentTime - startTime) > 2000) {
+					drivePower = 0.75;
 					if (drivePower > 1)
 						drivePower = 1;
-					rb.arcadeDrive(drivePower, 0); //TODO add gyro angle control
+					rb.tankDrive(drivePower, drivePower); //TODO add gyro angle control
 				}
 				//Setup for next action
 				else {
@@ -54,8 +52,11 @@ public class Auton {
 				}
 				
 				//Turn 90 degrees (UNTESTED)
-				if (didDrove && !didTurn && actioNum == 1 && rb.gyro.getAngle() < 90) {
-					rb.arcadeDrive(0, 0.75);//TODO add PID speed control
+				if (didDrove && !didTurn && actioNum == 1 /*&& rb.getAngle() < 90*/) {
+					/*turnPower = rb.turnPID(90);
+					if (turnPower > 1)
+						turnPower = 1;
+					rb.arcadeDrive(0, turnPower);*/
 				}
 				//Setup for next action
 				else {
@@ -391,7 +392,7 @@ public class Auton {
 			
 			SmartDashboard.putString("Running: ", "Auto Line Only");
 			
-			if (rb.encoder.getDistance() < 120 && actioNum == 0) {
+			if (actioNum == 0) {
 				rb.arcadeDrive(0.75, 0);
 			}
 			else {
